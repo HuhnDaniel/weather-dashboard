@@ -5,8 +5,13 @@ var apiKey = "40c8ddef7d6dcf0fa45ee70ad6205851";
 // If there is a previous city array, get it and populate the city list
 if (localStorage.getItem("cityArray") !== null) {
 	cityArray = localStorage.getItem("cityArray").split(",");
+	populateCityList();
 }
-populateCityList();
+
+// If there was a previously searched city load most recent search results
+if (localStorage.getItem("lastCity") !== null) {
+	getCityWeather(localStorage.getItem("lastCity"));
+}
 
 $(document).ready(function() {
 
@@ -22,10 +27,10 @@ $(document).ready(function() {
 
 // Function to take input city and search for its weather
 function getCityWeather(input) {
-	var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + apiKey;
+	var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + apiKey;
 
 	$.ajax({
-		url: queryURL,
+		url: currentWeatherURL,
 		method: "GET"
 	}).then(function(res) {
 		console.log(res);
@@ -35,10 +40,16 @@ function getCityWeather(input) {
 
 			// Only add a city to the city list if a response is recieved, so it is confirmed to be a real city
 			cityArray.push(input);
-			// 
+			// Add updated city array to localstorage
 			localStorage.setItem("cityArray", cityArray.toString());
+			// Update shown cities
 			populateCityList();
 		}
+
+		// Saves this city as the last city searched
+		localStorage.setItem("lastCity", input);
+
+		populateCurrentWeather(res);
 	});
 }
 
@@ -48,9 +59,34 @@ function populateCityList() {
 
 	// Make a listing for each city name
 	cityArray.forEach(function(city) {
-		$(".city-list")
-			.prepend($("<li>")
-				.addClass("city")
-				.text(city));
+		var newCity = $("<li>").addClass("city")
+							   .text(city);
+
+		$(".city-list").prepend(newCity);
 	});
+}
+
+function populateCurrentWeather(weatherObj) {
+	$(".weather-current").empty();
+
+	var today = moment.unix(weatherObj.dt).format("(M/D/YYYY)");
+
+	// City, date, and icon for city weather header
+	var weatherHeader = $("<p>").addClass("weather-city")
+								.text(weatherObj.name + " " + today)
+	var weatherIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + weatherObj.weather[0].icon + ".png")
+								.addClass("weather-icon");
+
+	$(".weather-current").append(weatherHeader.append(weatherIcon));
+
+	// Current temperature line
+	var tempF = ((weatherObj.main.temp -273.15) * 1.8) + 32;
+	var tempEl = $("<p>").text("Temperature: " + (Math.round(tempF * 10) / 10) + "° F")
+						 .addClass("weather-details");
+
+	$(".weather-current").append(tempEl);
+
+	// Current humidity line
+	$(".weather-current").append();
+	$(".weather-current").append();
 }

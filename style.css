@@ -47,7 +47,13 @@ header {
 }
 
 .weather-city {
+	display: flex;
+	line-height: 1.5;
 	font-size: 2em;
+}
+
+.weather-icon {
+	margin-left: .5em;
 }
 
 .weather-details {
