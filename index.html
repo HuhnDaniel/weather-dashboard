@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="./style.css" />
+	<title>Weather Dashboard</title>
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<aside class="city-pannel">
+			<form>
+				<label for="city-search">Search for a City:</label>
+				<input type="text" id="city-search" />
+			</form>
+			<ul class="city-list"></ul>
+		</aside>
+
+		<main class="weather-info">
+			<section class="weather-current"></section>
+			<section class="weather-forcast"></section>
+		</main>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="./script.js"></script>
+
+</body>
+
+</html>
