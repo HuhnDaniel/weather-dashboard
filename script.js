@@ -68,25 +68,28 @@ function populateCityList() {
 
 function populateCurrentWeather(weatherObj) {
 	$(".weather-current").empty();
-
-	var today = moment.unix(weatherObj.dt).format("(M/D/YYYY)");
-
+	
 	// City, date, and icon for city weather header
+	var today = moment.unix(weatherObj.dt).format("(M/D/YYYY)");
 	var weatherHeader = $("<p>").addClass("weather-city")
 								.text(weatherObj.name + " " + today)
 	var weatherIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + weatherObj.weather[0].icon + ".png")
 								.addClass("weather-icon");
-
 	$(".weather-current").append(weatherHeader.append(weatherIcon));
 
 	// Current temperature line
 	var tempF = ((weatherObj.main.temp -273.15) * 1.8) + 32;
 	var tempEl = $("<p>").text("Temperature: " + (Math.round(tempF * 10) / 10) + "° F")
 						 .addClass("weather-details");
-
 	$(".weather-current").append(tempEl);
 
 	// Current humidity line
-	$(".weather-current").append();
-	$(".weather-current").append();
+	var humidEl = $("<p>").text("Humidity: " + weatherObj.main.humidity + "%")
+						  .addClass("weather-details");
+	$(".weather-current").append(humidEl);
+
+	// Wind speed line
+	var windEl = $("<p>").text("Wind Speed: " + weatherObj.wind.speed + " MPH")
+						 .addClass("weather-details");
+	$(".weather-current").append(windEl);
 }
