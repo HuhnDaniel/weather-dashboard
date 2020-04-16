@@ -3,6 +3,12 @@
 	padding: 0;
 }
 
+header {
+	text-align: center;
+	font-size: 4em;
+	padding: .5em;
+}
+
 .wrapper {
 	display: grid;
 	grid-template-columns: 30% 65%;
