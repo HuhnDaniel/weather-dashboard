@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 // Function to take input city and search for its weather
 function getCityWeather(input) {
-	var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&appid=" + apiKey;
+	var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&units=imperial&appid=" + apiKey;
 
 	$.ajax({
 		url: currentWeatherURL,
@@ -78,8 +78,7 @@ function populateCurrentWeather(weatherObj) {
 	$(".weather-current").append(weatherHeader.append(weatherIcon));
 
 	// Current temperature line
-	var tempF = ((weatherObj.main.temp -273.15) * 1.8) + 32;
-	var tempEl = $("<p>").text("Temperature: " + (Math.round(tempF * 10) / 10) + "° F")
+	var tempEl = $("<p>").text("Temperature: " + (Math.round(weatherObj.main.temp * 10) / 10) + "° F")
 						 .addClass("weather-details");
 	$(".weather-current").append(tempEl);
 
