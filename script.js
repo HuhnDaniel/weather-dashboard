@@ -28,16 +28,18 @@ $(document).ready(function() {
 // Function to take input city and search for its weather
 function getCityWeather(input) {
 	var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&units=imperial&appid=" + apiKey;
+	var lat;
+	var lon;
 
+	// Call current weather api
 	$.ajax({
 		url: currentWeatherURL,
 		method: "GET"
 	}).then(function(res) {
-		console.log(res);
-
+		
 		// Check if city is on citylist already
 		if (!cityArray.includes(input)) {
-
+			
 			// Only add a city to the city list if a response is recieved, so it is confirmed to be a real city
 			cityArray.push(input);
 			// Add updated city array to localstorage
@@ -45,13 +47,24 @@ function getCityWeather(input) {
 			// Update shown cities
 			populateCityList();
 		}
-
+		
 		// Saves this city as the last city searched
 		localStorage.setItem("lastCity", input);
 
 		populateCurrentWeather(res);
-		populateUVIndex(res);
+
+		var forecastWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + res.coord.lat + "&lon=" + res.coord.lon + "&units=imperial&appid=" + apiKey;
+			
+		$.ajax({
+			url: forecastWeatherURL,
+			method: "GET"
+		}).then(function(res) {
+			populateUVIndex(res);
+			populateForecast(res);
+		});
 	});
+	
+	
 }
 
 // Function to populate searched city list
@@ -95,29 +108,24 @@ function populateCurrentWeather(weatherObj) {
 }
 
 function populateUVIndex(weatherObj) {
-	var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + weatherObj.coord.lat + "&lon=" + weatherObj.coord.lon + "&appid=" + apiKey;
+	var uvEl = $("<p>").html("UV index: <span id=\"uv-value\">" + weatherObj.current.uvi + "</span>")
+					   .addClass("weather-details");
+	$(".weather-current").append(uvEl);
 
-	$.ajax({
-		url: uvIndexURL,
-		method: "GET"
-	}).then(function(res) {
-		console.log(res);
+	// Determine what severity the UV level is and color accordingly
+	if (weatherObj.current.uvi < 3) {
+		$("#uv-value").addClass("low");
+	} else if (3 <= weatherObj.current.uvi && weatherObj.current.uvi < 6) {
+		$("#uv-value").addClass("moderate");
+	} else if (6 <= weatherObj.current.uvi && weatherObj.current.uvi < 8) {
+		$("#uv-value").addClass("high");
+	} else if (8 <= weatherObj.current.uvi && weatherObj.current.uvi < 11) {
+		$("#uv-value").addClass("very-high");
+	} else {
+		$("#uv-value").addClass("extreme");
+	}
+}
 
-		var uvEl = $("<p>").html("UV index: <span id=\"uv-value\">" + res.value + "</span>")
-						   .addClass("weather-details");
-		$(".weather-current").append(uvEl);
-
-		// Determine what severity the UV level is and color accordingly
-		if (res.value < 3) {
-			$("#uv-value").addClass("low");
-		} else if (3 <= res.value && res.value < 6) {
-			$("#uv-value").addClass("moderate");
-		} else if (6 <= res.value && res.value < 8) {
-			$("#uv-value").addClass("high");
-		} else if (8 <= res.value && res.value < 11) {
-			$("#uv-value").addClass("very-high");
-		} else {
-			$("#uv-value").addClass("extreme");
-		}
-	});
+function populateForecast(weatherObj) {
+	$(".forecast-wrapper").empty();
 }
