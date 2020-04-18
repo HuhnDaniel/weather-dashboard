@@ -103,6 +103,7 @@ header {
 	border: solid gray 1px;
 	border-radius: 5px;
 	padding: .5em;
+	text-align: center;
 }
 
 .forecast-day {

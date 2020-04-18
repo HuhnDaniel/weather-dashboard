@@ -59,7 +59,6 @@ function getCityWeather(input) {
 			url: forecastWeatherURL,
 			method: "GET"
 		}).then(function(res) {
-			console.log(res);
 			populateUVIndex(res);
 			populateForecast(res);
 		});
@@ -129,14 +128,32 @@ function populateUVIndex(weatherObj) {
 
 function populateForecast(weatherObj) {
 	$(".forecast-wrapper").empty();
+	console.log(weatherObj);
 
 	// For loop for tomorrow (index [1]) for five days
 	for (var i = 1; i <=5; i++) {
+
+		// Forecast date line
 		var newDay = $("<article>").addClass("forecast-panel");
 		var forecastDay = $("<p>").text(moment.unix(weatherObj.daily[i].dt).format("M/D/YYYY"))
 								  .addClass("forecast-day");
 
+		// Forecast icon
+		var iconDay = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + weatherObj.daily[i].weather[0].icon + ".png")
+								.addClass("weather-icon");
+
+		// Forecast temperature
+		var tempDay = $("<p>").text("Temp: " + weatherObj.daily[i].temp.day + "° F")
+							  .addClass("weather-details");
+
+		// Forecast humidity
+		var humidityDay = $("<p>").text("Humidity: " + weatherObj.daily[i].humidity + "%")
+								  .addClass("weather-details");
+
 		newDay.append(forecastDay);
+		newDay.append(iconDay);
+		newDay.append(tempDay);
+		newDay.append(humidityDay);
 		$(".forecast-wrapper").append(newDay);
 	}
 }
