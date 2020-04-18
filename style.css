@@ -104,3 +104,7 @@ header {
 	border-radius: 5px;
 	padding: .5em;
 }
+
+.forecast-day {
+	font-size: 1.2em;
+}

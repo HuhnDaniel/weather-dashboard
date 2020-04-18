@@ -59,6 +59,7 @@ function getCityWeather(input) {
 			url: forecastWeatherURL,
 			method: "GET"
 		}).then(function(res) {
+			console.log(res);
 			populateUVIndex(res);
 			populateForecast(res);
 		});
@@ -128,4 +129,14 @@ function populateUVIndex(weatherObj) {
 
 function populateForecast(weatherObj) {
 	$(".forecast-wrapper").empty();
+
+	// For loop for tomorrow (index [1]) for five days
+	for (var i = 1; i <=5; i++) {
+		var newDay = $("<article>").addClass("forecast-panel");
+		var forecastDay = $("<p>").text(moment.unix(weatherObj.daily[i].dt).format("M/D/YYYY"))
+								  .addClass("forecast-day");
+
+		newDay.append(forecastDay);
+		$(".forecast-wrapper").append(newDay);
+	}
 }
