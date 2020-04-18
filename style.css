@@ -149,12 +149,13 @@ header {
 }
 
 .weather-city {
-	display: block;
-	line-height: .5;
+	display: grid;
+	grid-template-columns: auto auto;
+	line-height: 1.2;
 }
 
 .weather-icon {
-	margin-left: 1.5em;
+	margin: auto;
 }
 
 .forecast-wrapper {
