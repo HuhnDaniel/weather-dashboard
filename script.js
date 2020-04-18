@@ -19,10 +19,18 @@ $(document).ready(function() {
 	$("form").submit(function(e) {
 		e.preventDefault();
 
+		// Get the weather for the input city
 		getCityWeather(citySearch.value);
 
 		citySearch.value = "";
 	});
+
+	// When you click a saved city, pull up its weather
+	$(".city-list").on("click", ".city", function() {
+
+		// Get weather for clicked city
+		getCityWeather(this.textContent);
+	})
 });
 
 // Function to take input city and search for its weather
@@ -128,7 +136,6 @@ function populateUVIndex(weatherObj) {
 
 function populateForecast(weatherObj) {
 	$(".forecast-wrapper").empty();
-	console.log(weatherObj);
 
 	// For loop for tomorrow (index [1]) for five days
 	for (var i = 1; i <=5; i++) {
@@ -143,7 +150,7 @@ function populateForecast(weatherObj) {
 								.addClass("weather-icon");
 
 		// Forecast temperature
-		var tempDay = $("<p>").text("Temp: " + weatherObj.daily[i].temp.day + "° F")
+		var tempDay = $("<p>").text("Temp: " + (Math.round(weatherObj.daily[i].temp.day * 10) / 10) + "° F")
 							  .addClass("weather-details");
 
 		// Forecast humidity

@@ -39,11 +39,13 @@ header {
 	padding: 1em;
 	font-size: 1.2em;
 	border: solid gray 1px;
+	border-radius: .5em;
 }
 
 .weather-current {
 	border: solid gray 1px;
 	padding: 1.5em;
+	border-radius: .5em;
 }
 
 .weather-city {
