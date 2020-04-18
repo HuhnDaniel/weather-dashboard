@@ -44,6 +44,10 @@ function getCityWeather(input) {
 		url: currentWeatherURL,
 		method: "GET"
 	}).then(function(res) {
+
+		// Unhide weather blocks
+		$(".hide").removeClass("hide");
+		$(".image-grid").removeClass("image-grid");
 		
 		// Check if city is on citylist already
 		if (!cityArray.includes(input)) {
@@ -90,6 +94,7 @@ function populateCityList() {
 
 function populateCurrentWeather(weatherObj) {
 	$(".weather-current").empty();
+
 	
 	// City, date, and icon for city weather header
 	var today = moment.unix(weatherObj.dt).format("(M/D/YYYY)");

@@ -7,6 +7,8 @@ header {
 	text-align: center;
 	font-size: 4em;
 	padding: .5em;
+	color: white;
+	background-color: rgb(82, 82, 82);
 }
 
 .wrapper {
@@ -27,8 +29,11 @@ header {
 }
 
 #submitBtn {
-	padding: .5em;
+	padding: .7em;
 	margin: 0;
+	border: none;
+	color: white;
+	background-color: rgb(53, 139, 252);
 }
 
 .city-list {
@@ -46,6 +51,16 @@ header {
 	border: solid gray 1px;
 	padding: 1.5em;
 	border-radius: .5em;
+}
+
+.image-grid {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-row-gap: 4em;
+}
+
+.filler-image {
+	margin: auto;
 }
 
 .weather-city {
@@ -86,6 +101,10 @@ header {
 	background-color: violet;
 }
 
+.hide {
+	display: none;
+}
+
 .weather-forecast {
 	padding: 1.5em;
 }
@@ -106,6 +125,8 @@ header {
 	border-radius: 5px;
 	padding: .5em;
 	text-align: center;
+	color: white;
+	background-color: rgb(53, 139, 252);
 }
 
 .forecast-day {
