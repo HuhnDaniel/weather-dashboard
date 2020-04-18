@@ -60,6 +60,30 @@ header {
 	margin-top: 1em;
 }
 
+#uv-value {
+	padding: .3em;
+}
+
+.low {
+	background-color: green;
+}
+
+.moderate {
+	background-color: yellow;
+}
+
+.high {
+	background-color: orange;
+}
+
+.very-high {
+	background-color: red;
+}
+
+.extreme {
+	background-color: violet;
+}
+
 .weather-forecast {
 	padding: 1.5em;
 }

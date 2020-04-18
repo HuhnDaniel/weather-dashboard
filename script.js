@@ -50,6 +50,7 @@ function getCityWeather(input) {
 		localStorage.setItem("lastCity", input);
 
 		populateCurrentWeather(res);
+		populateUVIndex(res);
 	});
 }
 
@@ -91,4 +92,32 @@ function populateCurrentWeather(weatherObj) {
 	var windEl = $("<p>").text("Wind Speed: " + weatherObj.wind.speed + " MPH")
 						 .addClass("weather-details");
 	$(".weather-current").append(windEl);
+}
+
+function populateUVIndex(weatherObj) {
+	var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + weatherObj.coord.lat + "&lon=" + weatherObj.coord.lon + "&appid=" + apiKey;
+
+	$.ajax({
+		url: uvIndexURL,
+		method: "GET"
+	}).then(function(res) {
+		console.log(res);
+
+		var uvEl = $("<p>").html("UV index: <span id=\"uv-value\">" + res.value + "</span>")
+						   .addClass("weather-details");
+		$(".weather-current").append(uvEl);
+
+		// Determine what severity the UV level is and color accordingly
+		if (res.value < 3) {
+			$("#uv-value").addClass("low");
+		} else if (3 <= res.value && res.value < 6) {
+			$("#uv-value").addClass("moderate");
+		} else if (6 <= res.value && res.value < 8) {
+			$("#uv-value").addClass("high");
+		} else if (8 <= res.value && res.value < 11) {
+			$("#uv-value").addClass("very-high");
+		} else {
+			$("#uv-value").addClass("extreme");
+		}
+	});
 }
