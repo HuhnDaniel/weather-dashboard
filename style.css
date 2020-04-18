@@ -132,3 +132,20 @@ header {
 .forecast-day {
 	font-size: 1.2em;
 }
+
+@media only screen and (max-width: 768px) {
+	
+.wrapper {
+	display: block;
+}
+
+.weather-info {
+	margin-top: 1em;
+}
+
+.forecast-wrapper {
+	grid-template-columns: auto;
+	grid-row-gap: .7em;
+}
+
+}
