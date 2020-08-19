@@ -16,4 +16,4 @@
 ## Resources
 - OpenWeather: https://openweathermap.org/, https://openweathermap.org/api
 ## Author
-- Daniel Moody-Huhn: https://github.com/HuhnDaniel
+- Daniel Moody-Huhn: https://huhndaniel.github.io
